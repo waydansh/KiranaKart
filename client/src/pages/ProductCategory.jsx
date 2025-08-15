@@ -12,7 +12,7 @@ const ProductCategory = () => {
     const searchCategory = categories.find(item => item.path.toLowerCase() === category)
 
     const filterProducts = products.filter(product => product.category.toLowerCase() === category)
-    // console.log(products/)
+    console.log(products)
 
     return (
         <div className="mt-16">
