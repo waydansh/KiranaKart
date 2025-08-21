@@ -46,6 +46,7 @@ export const productList = async (req, res) => {
 // get product by id
 export const productById = async (req, res) => {
     try {
+        // console.log(req.body)
         const { id } = req.body;
         const product = await Product.findById(id);
         if (!product) {
