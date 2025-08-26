@@ -4,13 +4,14 @@ import Address from "../models/Address.js";
 // add address
 export const addAddress = async (req, res) => {
     try {
-        const { address, userId } = req.body;
+        const userId = req.user.id;
+        const { address } = req.body;
         await Address.create({
             ...address,
             userId
         });
 
-        return res.json({ success: true, message: "Address added successfully"});
+        return res.json({ success: true, message: "Address added successfully" });
     } catch (error) {
         console.error("Error in addAddress function in addressController.js");
         console.log(error.message);
@@ -22,7 +23,7 @@ export const addAddress = async (req, res) => {
 // get address
 export const getAddress = async (req, res) => {
     try {
-        const { userId } = req.body;
+        const userId = req.user.id;
         const addresses = await Address.find({ userId });
         return res.json({ success: true, addresses });
     } catch (error) {

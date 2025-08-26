@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
+import toast from 'react-hot-toast'
+import { useEffect } from 'react'
 
 const InputField = ({ type, placeholder, name, handleChange, address }) => (
     <input
@@ -16,7 +18,7 @@ const InputField = ({ type, placeholder, name, handleChange, address }) => (
 
 const AddAddress = () => {
 
-    const { user, navigate } = useAppContext();
+    const { user, navigate, axios } = useAppContext();
 
     const [address, setAddress] = useState({
         firstName: '',
@@ -30,9 +32,27 @@ const AddAddress = () => {
         phone: ''
     })
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
+        try {
+            const { data } = await axios.post('/api/address/add', { address })
+            if (data.success) {
+                toast.success(data.message)
+                navigate('/cart')
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            console.log(error.message)
+            toast.error(data.message)
+        }
     }
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/cart')
+        }
+    }, [])
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -51,21 +71,30 @@ const AddAddress = () => {
             <div className='flex flex-col-reverse md:flex-row justify-between mt-10'>
                 <div className='flex-1 max-w-md'>
                     <form onSubmit={onSubmitHandler} className='space-y-3 mt-6 text-sm'>
-                        <div>
-                            <InputField handleChange={handleChange} address={address} name='firstName' type='text' placeholder='First Name'></InputField>
-                            <InputField handleChange={handleChange} address={address} name='lastName' type='text' placeholder='Last Name'></InputField>
+                        <div className='grid grid-cols-2 gap-4'>
+                            <InputField handleChange={handleChange} address={address} name='firstName' type='text' placeholder='First Name' />
+                            <InputField handleChange={handleChange} address={address} name='lastName' type='text' placeholder='Last Name' />
                         </div>
+                        <InputField handleChange={handleChange} address={address} name="phone" type="tel" placeholder="Phone Number" />
                         <InputField handleChange={handleChange} address={address} name="email" type="email" placeholder="Email Address" />
                         <InputField handleChange={handleChange} address={address} name="street" type="text" placeholder="Street" />
+
                         <div className="grid grid-cols-2 gap-4">
                             <InputField handleChange={handleChange} address={address} name="city" type="text" placeholder="City" />
                             <InputField handleChange={handleChange} address={address} name="state" type="text" placeholder="State" />
                         </div>
+
                         <div className="grid grid-cols-2 gap-4">
+                            <InputField handleChange={handleChange} address={address} name="zipcode" type="text" placeholder="Zipcode" />
                             <InputField handleChange={handleChange} address={address} name="country" type="text" placeholder="Country" />
                         </div>
-                        <button className="w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase">Save Address</button>
+
+
+                        <button className="w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase">
+                            Save Address
+                        </button>
                     </form>
+
                 </div>
                 <img src={assets.add_address_iamge} alt="Add Address" />
             </div>
