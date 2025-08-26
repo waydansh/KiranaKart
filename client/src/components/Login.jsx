@@ -1,10 +1,10 @@
 import React from 'react'
 import { useAppContext } from '../context/AppContext';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-    const { setShowUserLogin, setUser, navigate } = useAppContext();
+    const { setShowUserLogin, setUser, navigate, axios } = useAppContext();
+
     const [state, setState] = React.useState("login");
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");

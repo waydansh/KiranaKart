@@ -38,10 +38,10 @@ export const AppContextProvider = ({ children }) => {
     }
 
     // fetch user auth status
-    const fetchUser = async ()=>{
+    const fetchUser = async () => {
         try {
-            const {data} = await axios.get('/api/user/is-auth')
-            if(data.success){
+            const { data } = await axios.get('/api/user/is-auth')
+            if (data.success) {
                 setUser(data.user)
                 setCartItems(data.user.cartItems)
             }
@@ -76,7 +76,7 @@ export const AppContextProvider = ({ children }) => {
         toast.success('Item added to cart');
     }
 
-    const updateCartItem = (itemId, quantity)=>{
+    const updateCartItem = (itemId, quantity) => {
         let cartData = structuredClone(cartItems);
         cartData[itemId] = quantity;
         setCartItems(cartData);
@@ -87,7 +87,7 @@ export const AppContextProvider = ({ children }) => {
         let cartData = structuredClone(cartItems);
         if (cartData[itemId]) {
             cartData[itemId] -= 1;
-            if(cartData[itemId] === 0) {
+            if (cartData[itemId] === 0) {
                 delete cartData[itemId];
             }
         }
@@ -122,6 +122,24 @@ export const AppContextProvider = ({ children }) => {
         fetchProducts();
         fetchSellerStatus();
     }, []);
+
+    //update db cart items
+    useEffect(() => {
+        const updateCart = async () => {
+            if (!user) return;
+            try {
+                const { data } = await axios.post('/api/cart/update', { cartItems });
+                if (!data.success) {
+                    toast.error(data.message);
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error(error.message);
+            }
+        };
+
+        updateCart();
+    }, [cartItems, user]);
 
     const value = { navigate, user, setUser, isSeller, setIsSeller, showUserLogin, setShowUserLogin, products, currency, addToCart, updateCartItem, removeFromCart, cartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, setCartItems, axios, fetchProducts };
 

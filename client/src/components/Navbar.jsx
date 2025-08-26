@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'; // Import useState a
 import { NavLink } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import { useAppContext } from '../context/AppContext';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const Navbar = () => {
