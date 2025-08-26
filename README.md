@@ -4,7 +4,7 @@
 **GreenCart** is a modern full-stack grocery store application built with the **MERN stack**, featuring a user-friendly UI, an admin dashboard, category filtering, cart management, and two payment options: **online via Stripe** and **cash on delivery**.
 
 🌐 **Live site**: [greencart-tau.vercel.app](https://greencart-tau.vercel.app)  
-📦 **GitHub repository**: [github.com/diegovilhalva/greencart](https://github.com/diegovilhalva/greencart)
+📦 **GitHub repository**: [github.com/waydansh/KiranaKart](https://github.com/waydansh/KiranaKart)
 
 ---
 
@@ -37,7 +37,7 @@
 Clone the repository:
 
 ```bash
-git clone https://github.com/diegovilhalva/greencart.git
+git clone https://github.com/waydansh/KiranaKart.git
 cd greencart
 ```
 
@@ -104,7 +104,7 @@ This project is open-source and available under the MIT License. See the [LICENS
 
 ## 🙌 Author
 
-Developed by [Diego Vilhalva](https://github.com/diegovilhalva)
+Developed by [Vedansh Gupta](https://github.com/waydansh)
 
 
 
