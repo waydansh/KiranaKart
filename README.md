@@ -1,9 +1,8 @@
 
-# 🛒 GreenCart
+# 🛒 KiranaKart
 
-**GreenCart** is a modern full-stack grocery store application built with the **MERN stack**, featuring a user-friendly UI, an admin dashboard, category filtering, cart management, and two payment options: **online via Stripe** and **cash on delivery**.
+**KiranaKart** is a modern full-stack grocery store application built with the **MERN stack**, featuring a user-friendly UI, an admin dashboard, category filtering, cart management, and two payment options: **online via Stripe** and **cash on delivery**.
 
-🌐 **Live site**: [greencart-tau.vercel.app](https://greencart-tau.vercel.app)  
 📦 **GitHub repository**: [github.com/waydansh/KiranaKart](https://github.com/waydansh/KiranaKart)
 
 ---
@@ -15,7 +14,7 @@
 - 🛍️ Browse and filter products by category
 - 🔍 Product search functionality
 - 🛒 Add/remove items from the cart
-- 💳 Two payment methods: **Stripe** (online) or **Cash on Delivery**
+- 💳 Two payment methods: **Razorpay** (online) or **Cash on Delivery**
 - 📦 Admin dashboard for order and product management (WIP/future scope)
 - ☁️ Image upload with **Cloudinary**
 
@@ -38,7 +37,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/waydansh/KiranaKart.git
-cd greencart
+cd KiranaKart
 ```
 
 ### 1. Install Dependencies
@@ -61,23 +60,22 @@ Create a `.env` file inside the `server` folder with the following variables:
 
 ```
 MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-STRIPE_PUBLIC_KEY=your_stripe_public_key
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-CLOUDINARY_NAME=your_cloud_name
-CLOUDINARY_KEY=your_api_key
-CLOUDINARY_SECRET=your_api_secret
-CLIENT_URL=http://localhost:5173
+NODE_ENV = "development"
 SELLER_EMAI=create_a_seller_email
 SELLER_PASSWORD=create_a_seller_password
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+JWT_SECRET=your_jwt_secret
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 ```
 Create a `.env` file inside the `client` folder with the following variables:
 ```
-VITE_CURRENCY="$"
-VITE_URL_ENDPOINT=your_local_api_endpoint
+VITE_CURRENCY=your_currency
+VITE_BACKEND_URL=your_backend_url
+VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
+VITE_RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 
 ```
 
@@ -105,7 +103,3 @@ This project is open-source and available under the MIT License. See the [LICENS
 ## 🙌 Author
 
 Developed by [Vedansh Gupta](https://github.com/waydansh)
-
-
-
-
