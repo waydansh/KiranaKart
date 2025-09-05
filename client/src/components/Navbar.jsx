@@ -30,18 +30,12 @@ const Navbar = () => {
         }
     }, [searchQuery]);
 
-    // --- START: Code for Sliding Hover Effect ---
-
-    // State to hold the style for our sliding element
     const [sliderStyle, setSliderStyle] = useState({});
 
-    // Ref for the container of the navigation links
     const navLinksRef = useRef(null);
 
-    // Function to handle mouse entering a link
     const handleMouseEnter = (e) => {
         const linkElement = e.currentTarget;
-        // Calculate position relative to the parent container (navLinksRef)
         const newStyle = {
             width: linkElement.offsetWidth,
             left: linkElement.offsetLeft,
@@ -49,13 +43,10 @@ const Navbar = () => {
         setSliderStyle(newStyle);
     };
 
-    // Function to handle mouse leaving the entire nav links container
     const handleMouseLeave = () => {
-        // Reset the style to hide the slider
         setSliderStyle({});
     };
 
-    // --- END: Code for Sliding Hover Effect ---
 
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
@@ -63,34 +54,24 @@ const Navbar = () => {
                 <img src={assets.logo} alt="logo" />
             </NavLink>
 
-            {/* Desktop Menu */}
             <div className="hidden sm:flex items-center gap-8">
 
-                {/* --- START: Modified Nav Links Section --- */}
 
-                {/* The container needs `position: relative` for the absolute slider to work.
-                  We also add the ref and the mouse leave handler here.
-                */}
                 <div
                     ref={navLinksRef}
                     onMouseLeave={handleMouseLeave}
                     className="relative flex items-center gap-8"
                 >
-                    {/* The sliding element. It moves based on the sliderStyle state. */}
                     <div
                         className="absolute bg-primary-dull h-full rounded-full transition-all duration-300 ease-in-out -z-10"
                         style={{ ...sliderStyle, top: 0, zIndex: 0 }}
                     ></div>
 
-                    {/* Each NavLink now needs `onMouseEnter`. The text color is always white, 
-                      and the `z-index` ensures it appears above the slider.
-                    */}
                     <NavLink to='/' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>Home</NavLink>
                     <NavLink to='/products' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>All Products</NavLink>
                     <NavLink to='/' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>Contact</NavLink>
                 </div>
 
-                {/* --- END: Modified Nav Links Section --- */}
 
                 <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
                     <input onChange={(e) => setSearchQuery(e.target.value)} className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search products" />
@@ -122,9 +103,7 @@ const Navbar = () => {
                 }
             </div>
 
-            {/* The rest of your component remains the same */}
 
-            {/* Mobile Menu */}
 
             <div className='sm:hidden flex items-center gap-6'>
                 <div onClick={() => navigate("cart")} className="relative cursor-pointer">
