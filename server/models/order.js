@@ -32,11 +32,18 @@ const orderSchema = new mongoose.Schema({
     },
     paymentType: {
         type: String,
+        enum: ["COD", "Online"],
         required: true
     },
     isPaid: {
         type: Boolean,
         default: false
+    },
+    razorpayOrderId: {
+        type: String
+    },
+    razorpayPaymentId: {
+        type: String
     },
 }, {
     timestamps: true

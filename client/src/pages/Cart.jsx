@@ -52,16 +52,78 @@ const Cart = () => {
                     {
                         userId: user._id,
                         items: cartArray.map(item => ({ product: item._id, quantity: item.quantity })),
-                        address:  selectedAddress._id
+                        address: selectedAddress._id
                     })
-                    if(data.success){
-                        toast.success(data.message);
-                        setCartItems({});
-                        navigate("/my-orders")
-                    }else{
-                        toast.error(data.message)
-                    }
+                if (data.success) {
+                    toast.success(data.message);
+                    setCartItems({});
+                    navigate("/my-orders")
+                } else {
+                    toast.error(data.message)
+                }
             }
+            else {
+                try {
+                    // Create Razorpay order via backend
+                    const { data } = await axios.post("/api/order/razorpay", {
+                        items: cartArray.map(item => ({ product: item._id, quantity: item.quantity })),
+                        address: selectedAddress._id,
+                        totalAmount,
+                    });
+
+                    if (!data.success) {
+                        return toast.error(data.message);
+                    }
+
+                    const { order: razorpayOrder, newOrder } = data;
+
+                    // Configure Razorpay checkout
+                    const options = {
+                        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+                        amount: razorpayOrder.amount,
+                        currency: razorpayOrder.currency,
+                        name: "KiranaKart",
+                        description: "Order Payment",
+                        order_id: razorpayOrder.id,
+                        handler: async function (response) {
+                            try {
+                                // Verify payment
+                                const verifyRes = await axios.post("/api/order/verifyPayment", {
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    orderId: newOrder._id
+                                });
+
+                                if (verifyRes.data.success) {
+                                    toast.success("Payment successful!");
+                                    setCartItems({});
+                                    navigate("/my-orders");
+                                } else {
+                                    toast.error("Payment verification failed!");
+                                }
+                            } catch (err) {
+                                toast.error("Error verifying payment");
+                            }
+                        },
+                        prefill: {
+                            name: user?.name || "Guest",
+                            email: user?.email || "test@example.com",
+                            contact: user?.phone || "9999999999",
+                        },
+                        theme: {
+                            color: "#4ebf8b",
+                        },
+                    };
+
+                    const rzp = new window.Razorpay(options);
+                    rzp.open();
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error initiating payment");
+                }
+            }
+
         } catch (error) {
             toast.error(data.message)
         }
@@ -166,7 +228,7 @@ const Cart = () => {
 
                     <p className="text-sm font-medium uppercase mt-6">Payment Method</p>
 
-                    <select onChange={(e) => setPaymentOption(e.target.value)} className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
+                    <select onChange={(e) => setPaymentMethod(e.target.value)} className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
                         <option value="COD">Cash On Delivery</option>
                         <option value="Online">Online Payment</option>
                     </select>

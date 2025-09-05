@@ -109,8 +109,10 @@ export const AppContextProvider = ({ children }) => {
         let totalAmount = 0;
         for (const item in cartItems) {
             const itemInfo = products.find(product => product._id === item);
-            if (cartItems[item] > 0) {
+            if (itemInfo && cartItems[item] > 0) {
                 totalAmount += itemInfo.offerPrice * cartItems[item];
+            } else if (!itemInfo){
+                console.log(`Product with productId ${item} not found in products list`);
             }
         }
         return Math.floor(totalAmount * 100) / 100; // round to 2 decimal places
