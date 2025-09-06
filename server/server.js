@@ -18,7 +18,7 @@ await connectDB();
 await connectCloudinary();
 
 // allow multiple origins
-const allowedOrigins = ['http://localhost:5173', 'https://kirana-kart.vercel.app']
+const allowedOrigins = ['http://localhost:5173', 'https://kirana-kart-fh8020yal-waydanshs-projects.vercel.app']
 
 // Middleware to parse JSON bodies
 app.use(express.json());
