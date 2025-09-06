@@ -18,19 +18,36 @@ await connectDB();
 await connectCloudinary();
 
 // allow multiple origins
-const allowedOrigins = ['http://localhost:5173', 'https://kirana-kart.vercel.app']
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://kirana-kart.vercel.app'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl, Postman)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: allowedOrigins, credentials: true}));
 
 
 app.get('/', (req, res) => {
     res.send('Server is running');
 });
 
-app.use('/api/user', userRouter); 
+app.use('/api/user', userRouter);
 app.use('/api/seller', sellerRouter);
 app.use('/api/product', productRouter);
 app.use('/api/cart', cartRouter);
