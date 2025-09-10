@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'; 
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import { useAppContext } from '../context/AppContext';
@@ -67,6 +67,7 @@ const Navbar = () => {
                         style={{ ...sliderStyle, top: 0, zIndex: 0 }}
                     ></div>
 
+                    <NavLink to='/seller' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>Seller Dashboard</NavLink>
                     <NavLink to='/' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>Home</NavLink>
                     <NavLink to='/products' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>All Products</NavLink>
                     <NavLink to='/' onMouseEnter={handleMouseEnter} className='relative z-10 text-black hover:text-white px-1.75 py-0.5 transition-colors duration-300'>Contact</NavLink>

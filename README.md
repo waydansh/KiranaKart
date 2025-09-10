@@ -4,6 +4,7 @@
 **KiranaKart** is a modern full-stack grocery store application built with the **MERN stack**, featuring a user-friendly UI, an admin dashboard, category filtering, cart management, and two payment options: **online via Stripe** and **cash on delivery**.
 
 📦 **GitHub repository**: [github.com/waydansh/KiranaKart](https://github.com/waydansh/KiranaKart)
+📦 **Live Link**: [https://kirana-kart.vercel.app/](https://kirana-kart.vercel.app/)
 
 ---
 
