@@ -27,13 +27,13 @@ export const register = async (req, res) => {
             cartItems: {}
         });
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         res.cookie('token', token, {
             httpOnly: true, // prevents client-side access to the cookie
             secure: process.env.NODE_ENV === 'production', // use secure cookies in production
             sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'strict', // adjust based on your environment
-            maxAge: 7 * 24 * 60 * 60 * 1000 // cookie expiration time
+            maxAge: 1 * 24 * 60 * 60 * 1000 // cookie expiration time
         });
 
         return res.json({ success: true, message: "User registered successfully", user: { email: user.email, name: user.name } });
@@ -63,13 +63,13 @@ export const login = async (req, res) => {
             return res.json({ success: false, message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         res.cookie('token', token, {
             httpOnly: true, // prevents client-side access to the cookie
             secure: process.env.NODE_ENV === 'production', // use secure cookies in production
             sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'strict', // adjust based on your environment
-            maxAge: 7 * 24 * 60 * 60 * 1000 // cookie expiration time
+            maxAge: 1 * 24 * 60 * 60 * 1000 // cookie expiration time
         });
 
         return res.json({ success: true, message: "User logged in successfully", user: { email: user.email, name: user.name } });
